@@ -1,0 +1,30 @@
+/* src/styles/global.css */
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+:root {
+  --primary-color: #333;
+  --secondary-color: #666;
+  --background-color: #111;
+  --text-color: #ddd;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: var(--primary-color);
+}
+
+a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

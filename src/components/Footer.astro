@@ -1,0 +1,61 @@
+---
+// Import necessary components or styles if needed
+---
+
+<footer class="footer">
+  <div class="left-section">
+    <p>&copy; {new Date().getFullYear()} Abdaty Kounta</p>
+  </div>
+  <div class="center-section">
+    <a id="linkedin" href="//www.linkedin.com/in/abdourahmane-o-kounta" target="_blank"><i class="fab fa-linkedin"></i></a>
+    <a id="handshake" href="//app.joinhandshake.com/profiles/kountaao" target="_blank"><i class="fas fa-handshake"></i></a>
+    <a id="github" href="//github.com/Abdatyk/portfolio-website-v2" target="_blank"><i class="fab fa-github"></i></a>
+    <a id="email" href="mailto:abdatykounta@gmail.com"><i class="far fa-envelope"></i></a>
+  </div>
+  <div class="right-section">
+    <p>Phone: (513) 304-7270</p>
+  </div>
+</footer>
+
+<style>
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+}
+
+.left-section, .center-section, .right-section {
+  display: flex;
+  align-items: center;
+}
+
+.center-section a {
+  margin: 0 1rem;
+}
+
+.right-section p {
+  margin-left: auto;
+}
+
+#linkedin i {
+  font-size: 24px;
+  color: #007bb5;
+}
+
+#handshake i {
+  font-size: 24px;
+  color: #008f6b;
+}
+
+#github i {
+  font-size: 24px;
+  color: #181717;
+}
+
+#email i {
+  font-size: 24px;
+  color: #e67e22;
+}
+</style>

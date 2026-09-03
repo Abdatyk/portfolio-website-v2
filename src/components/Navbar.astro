@@ -1,0 +1,47 @@
+---
+import '@/styles/global.css'
+---
+<nav class="navbar">
+  <div class="title">My Astro Site</div>
+  <ul class="categories">
+    <li><a href="/homelab/">Homelab</a></li>
+    <li><a href="/projects/">Projects</a></li>
+    <li><a href="/about/">About</a></li>
+    <li><a href="/resume/">Resume</a></li>
+  </ul>
+</nav>
+
+<style>
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background-color: #333;
+}
+
+.title {
+  color: white;
+  font-size: 1.5rem;
+}
+
+.categories {
+  list-style-type: none;
+  display: flex;
+}
+
+.categories li {
+  margin-left: 20px;
+}
+
+.categories a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+}
+
+.categories a:hover {
+  text-decoration: underline;
+}
+</style>
+
