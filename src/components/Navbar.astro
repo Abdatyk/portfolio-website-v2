@@ -2,7 +2,7 @@
 import '@/styles/global.css'
 ---
 <nav class="navbar">
-  <div class="title">My Astro Site</div>
+  <div class="title">Abdaty Kounta</div>
   <ul class="categories">
     <li><a href="/homelab/">Homelab</a></li>
     <li><a href="/projects/">Projects</a></li>
@@ -18,6 +18,28 @@ import '@/styles/global.css'
   align-items: center;
   padding: 1rem;
   background-color: #333;
+}
+
+.navbar a {
+  color: #333;
+  text-decoration: none;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease; /* Add transition for border-radius */
+  border-radius: 5px; /* Add rounded corners */
+}
+
+.navbar a:hover {
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .navbar a {
+    display: none;
+  }
+  .navbar a.active {
+    display: block;
+  }
 }
 
 .title {

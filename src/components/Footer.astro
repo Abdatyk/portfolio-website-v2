@@ -1,5 +1,5 @@
 ---
-// Import necessary components or styles if needed
+
 ---
 
 <footer class="footer">
@@ -33,29 +33,36 @@
 
 .center-section a {
   margin: 0 1rem;
+  text-decoration: none;
+  color: inherit;
 }
 
 .right-section p {
   margin-left: auto;
 }
 
+#linkedin i, #handshake i, #github i, #email i {
+  font-size: 28px;
+  transition: transform 0.3s ease; /* Add transition effect for size change */
+}
+
+.center-section a:hover i {
+  transform: scale(1.25); /* Increase size on hover */
+}
+
 #linkedin i {
-  font-size: 24px;
   color: #007bb5;
 }
 
 #handshake i {
-  font-size: 24px;
   color: #008f6b;
 }
 
 #github i {
-  font-size: 24px;
   color: #181717;
 }
 
 #email i {
-  font-size: 24px;
   color: #e67e22;
 }
 </style>
