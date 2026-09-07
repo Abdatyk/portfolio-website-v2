@@ -1,7 +1,7 @@
 ---
 import Host from '@/components/diagram/Host.astro'
 import Service from '@/components/diagram/Service.astro'
-import { authentik, crowdsec, immich, jellyfin, n8n, netbird, nextcloud, obsidian, pihole, router, searxng, vaultwarden } from '@/images/list.astro'
+import { authentik, crowdsec, immich, jellyfin, n8n, netbird, nextcloud, obsidian, pihole, router, searxng, vaultwarden } from '@/components/diagram/serviceList.astro'
 ---
 
 <div class="diagram-scroll">
@@ -9,40 +9,40 @@ import { authentik, crowdsec, immich, jellyfin, n8n, netbird, nextcloud, obsidia
     <svg class="connectors" id="connector-svg"></svg>
 
     <div class="row">
-      <div class="node" data-id="h1"><Host title="Router" description="Description for Box 1">
-        <Service icon={router.src} name="Netgear Nighthawk" link="https://example.com/icon1" />
+      <div class="node" data-id="h1"><Host title="Router" id="router" description="Description for Box 1">
+        <Service icon={router.image} name={router.title} link={router.link} />
       </Host></div>
-      <div class="node" data-id="h2"><Host title="DNS Server" description="Description for Box 2">
-        <Service icon={pihole.src} name="PiHole" link="https://example.com/icon2" />
-      </Host></div>
-    </div>
-
-    <div class="row">
-      <div class="node" data-id="h3"><Host title="Lenovo Ideapad 5" description="Description for Box 3">
-        <div class="service-row">
-          <Service icon={netbird.src} name="Netbird VPN & Proxy" link="https://example.com/icon3" />
-          <Service icon={crowdsec.src} name="Crowdsec" link="https://example.com/icon4" />
-        </div>
+      <div class="node" data-id="h2"><Host title="DNS Server" id="dns" description="Description for Box 2">
+        <Service icon={pihole.image} name={pihole.title} link={pihole.link} />
       </Host></div>
     </div>
 
     <div class="row">
-      <div class="node" data-id="h4"><Host title="Raspberry Pi 5" description="Description for Box 4">
+      <div class="node" data-id="h3"><Host title="Lenovo Ideapad 5" id="lenovo" description="Description for Box 3">
         <div class="service-row">
-          <Service icon={authentik.src} name="Authentik IdP" link="https://example.com/icon5" />
-          <Service icon={n8n.src} name="n8n Automation" link="https://example.com/icon6" />
-          <Service icon={searxng.src} name="SearXNG" link="https://example.com/icon7" />
+          <Service icon={netbird.image} name={netbird.title} link={netbird.link} />
+          <Service icon={crowdsec.image} name={crowdsec.title} link={crowdsec.link} />
         </div>
       </Host></div>
-      <div class="node" data-id="h5"><Host title="Dell Optiplex 7080" description="Description for Box 5">
+    </div>
+
+    <div class="row">
+      <div class="node" data-id="h4"><Host title="Raspberry Pi 5" id="rpi" description="Description for Box 4">
         <div class="service-row">
-          <Service icon={jellyfin.src} name="Jellyfin Media" link="https://example.com/icon8" />
-          <Service icon={immich.src} name="Immich" link="https://example.com/icon9" />
-          <Service icon={nextcloud.src} name="NextCloud" link="https://example.com/icon10" />
+          <Service icon={authentik.image} name={authentik.title} link={authentik.link} />
+          <Service icon={n8n.image} name={n8n.title} link={n8n.link} />
+          <Service icon={searxng.image} name={searxng.title} link={searxng.link} />
+        </div>
+      </Host></div>
+      <div class="node" data-id="h5"><Host title="Dell Optiplex 7080" id="dell" description="Description for Box 5">
+        <div class="service-row">
+          <Service icon={jellyfin.image} name={jellyfin.title} link={jellyfin.link} />
+          <Service icon={immich.image} name={immich.title} link={immich.link} />
+          <Service icon={nextcloud.image} name={nextcloud.title} link={nextcloud.link} />
         </div>
         <div class="service-row">
-          <Service icon={vaultwarden.src} name="Vaultwarden" link="https://example.com/icon11" />
-          <Service icon={obsidian.src} name="Obsidian LiveSync" link="https://example.com/icon12" />
+          <Service icon={vaultwarden.image} name={vaultwarden.title} link={vaultwarden.link} />
+          <Service icon={obsidian.image} name={obsidian.title} link={obsidian.link} />
         </div>
       </Host></div>
     </div>

@@ -1,2 +1,60 @@
 ---
+import '@/styles/global.css';
 ---
+
+<div class="summary-header">
+  <h1 id="header">Summary Header</h1>
+  <p id="summary">Placeholder information text goes here.</p>
+</div>
+
+<style>
+  .summary-header {
+    /* background-color: var(--primary-color); */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    /* color: var(--text-color); */
+  }
+</style>
+
+<script>
+  import { selectedNode } from '@/stores/diagram'
+
+  const headers: Record<string, string> = {
+    default: 'Overview',
+    router: 'The Router',
+    dns: 'PiHole DNS Server',
+    lenovo: 'Lenovo Laptop - Proxy',
+    rpi: 'Raspberry Pi 5',
+    dell: 'Dell Optiplex - Proxmox',
+  }
+  const summaries: Record<string, string> = {
+    default: 'Overview details',
+
+    router: 'Details about the router',
+
+    dns: 'Details about dns',
+
+    lenovo: 'Details about netbird',
+
+    rpi: 'Details about the rpi 5',
+
+    dell: 'Details about the proxmox server',
+  }
+
+  const hdr = document.getElementById('header');
+  const summ = document.getElementById('summary');
+
+  selectedNode.subscribe((id) => {
+    if (!hdr) return;
+    const key = id ?? 'default';
+    hdr.textContent = headers[key] ?? headers.overview;
+  });
+
+  selectedNode.subscribe((id) => {
+    if (!summ) return;
+    const key = id ?? 'default';
+    summ.textContent = summaries[key] ?? summaries.overview;
+  });
+</script>
