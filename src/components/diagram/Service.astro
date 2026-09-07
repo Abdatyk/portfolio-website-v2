@@ -1,10 +1,12 @@
 ---
+import { Image } from "astro:assets";
+
 const { icon, name, link } = Astro.props;
 ---
 
 <div class="service-container">
   <a href={link} target="_blank" rel="noopener noreferrer">
-    <img src={icon} alt={name} width="50" />
+    <Image src={icon} alt={name} width="50" />
   </a>
 
   <a href={link} target="_blank" rel="noopener noreferrer">
