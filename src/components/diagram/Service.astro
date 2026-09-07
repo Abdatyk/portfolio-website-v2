@@ -1,0 +1,35 @@
+---
+const { icon, name, link } = Astro.props;
+---
+
+<div class="service-container">
+  <a href={link} target="_blank" rel="noopener noreferrer">
+    <img src={icon} alt={name} width="50" />
+  </a>
+
+  <a href={link} target="_blank" rel="noopener noreferrer">
+    <span class="service-name">{name}</span>
+  </a>
+</div>
+
+<style>
+  .service-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border-radius: 8px; /* Rounded corners */
+    padding: 5px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow for depth */
+  }
+  .service-name {
+    margin-top: 10px;
+    font-size: 16px;
+    text-align: center;
+  }
+  .service-container:hover {
+    background-color: #555;
+    transform: scale(1.05);
+  }
+</style>

@@ -2,10 +2,13 @@
 @import '@fortawesome/fontawesome-free/css/all.css';
 
 :root {
-  --primary-color: #333;
+  --primary-color: #4f4f4f;
+  --primary-color-light: #444;
   --secondary-color: #666;
   --background-color: #111;
-  --text-color: #ddd;
+  --text-color: #fff;
+  --alt-text-color: #fff;
+  --border-color: #ccc;
 }
 
 body {
@@ -21,10 +24,11 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 a {
-  color: var(--secondary-color);
+  color: var(--alt-text-color);
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: underline;
 }
+

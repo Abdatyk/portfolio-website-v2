@@ -1,0 +1,180 @@
+---
+import Host from '@/components/diagram/Host.astro'
+import Service from '@/components/diagram/Service.astro'
+import { authentik, crowdsec, immich, jellyfin, n8n, netbird, nextcloud, obsidian, pihole, router, searxng, vaultwarden } from '@/images/list.astro'
+---
+
+<div class="diagram-scroll">
+  <div class="diagram" id="homelab-diagram">
+    <svg class="connectors" id="connector-svg"></svg>
+
+    <div class="row">
+      <div class="node" data-id="h1"><Host title="Router" description="Description for Box 1">
+        <Service icon={router.src} name="Netgear Nighthawk" link="https://example.com/icon1" />
+      </Host></div>
+      <div class="node" data-id="h2"><Host title="DNS Server" description="Description for Box 2">
+        <Service icon={pihole.src} name="PiHole" link="https://example.com/icon2" />
+      </Host></div>
+    </div>
+
+    <div class="row">
+      <div class="node" data-id="h3"><Host title="Lenovo Ideapad 5" description="Description for Box 3">
+        <div class="service-row">
+          <Service icon={netbird.src} name="Netbird VPN & Proxy" link="https://example.com/icon3" />
+          <Service icon={crowdsec.src} name="Crowdsec" link="https://example.com/icon4" />
+        </div>
+      </Host></div>
+    </div>
+
+    <div class="row">
+      <div class="node" data-id="h4"><Host title="Raspberry Pi 5" description="Description for Box 4">
+        <div class="service-row">
+          <Service icon={authentik.src} name="Authentik IdP" link="https://example.com/icon5" />
+          <Service icon={n8n.src} name="n8n Automation" link="https://example.com/icon6" />
+          <Service icon={searxng.src} name="SearXNG" link="https://example.com/icon7" />
+        </div>
+      </Host></div>
+      <div class="node" data-id="h5"><Host title="Dell Optiplex 7080" description="Description for Box 5">
+        <div class="service-row">
+          <Service icon={jellyfin.src} name="Jellyfin Media" link="https://example.com/icon8" />
+          <Service icon={immich.src} name="Immich" link="https://example.com/icon9" />
+          <Service icon={nextcloud.src} name="NextCloud" link="https://example.com/icon10" />
+        </div>
+        <div class="service-row">
+          <Service icon={vaultwarden.src} name="Vaultwarden" link="https://example.com/icon11" />
+          <Service icon={obsidian.src} name="Obsidian LiveSync" link="https://example.com/icon12" />
+        </div>
+      </Host></div>
+    </div>
+  </div>
+</div>
+
+<style>
+  /* Scrolls horizontally instead of letting the layout wrap/rearrange when
+     it doesn't fit the viewport (e.g. box 4 / box 5 on narrow screens). */
+  .diagram-scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 8px; /* room for the scrollbar so it doesn't sit on the content */
+  }
+  .diagram {
+    position: relative; /* SVG overlay positions against this */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+    width: max-content; /* size to content instead of stretching/wrapping */
+    max-width: none;
+    margin: 0 auto;
+    padding: 5%;
+  }
+  .row {
+    display: flex;
+    justify-content: center;
+    flex-wrap: nowrap; /* never wrap to a new line - scroll instead */
+    gap: 24px;
+  }
+  .connectors {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 0;
+  }
+  .node {
+    position: relative;
+    z-index: 1;
+    flex-shrink: 0; /* keep boxes at their natural size, never squeezed */
+  }
+
+  .service-row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+  }
+</style>
+
+
+<script>
+  const EDGES = [
+    ['h1', 'h2'],
+    ['h1', 'h3'],
+    ['h3', 'h4'],
+    ['h3', 'h5'],
+  ];
+
+  const ARROW_GAP = 8; // px of breathing room left for the arrowhead
+
+  function rectEdgePoint(halfWidth: number, halfHeight: number, dx: number, dy: number) {
+    if (dx === 0 && dy === 0) return { x: 0, y: 0 };
+    const scale = 1 / Math.max(Math.abs(dx) / halfWidth, Math.abs(dy) / halfHeight);
+    return { x: dx * scale, y: dy * scale };
+  }
+
+  function drawConnectors() {
+    const container = document.getElementById('homelab-diagram');
+    const svg = document.getElementById('connector-svg');
+    if (!container || !svg) return;
+
+    svg.innerHTML = `
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5"
+                markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+          <path d="M 0 0 L 10 5 L 0 10 z" fill="var(--line, #94a3b8)" />
+        </marker>
+      </defs>
+    `;
+    const containerRect = container.getBoundingClientRect();
+
+    for (const [fromId, toId] of EDGES) {
+      const fromEl = container.querySelector(`[data-id="${fromId}"]`);
+      const toEl = container.querySelector(`[data-id="${toId}"]`);
+      if (!fromEl || !toEl) continue;
+
+      const from = fromEl.getBoundingClientRect();
+      const to = toEl.getBoundingClientRect();
+
+      const x1 = from.left + from.width / 2 - containerRect.left;
+      const y1 = from.top + from.height / 2 - containerRect.top;
+      const x2 = to.left + to.width / 2 - containerRect.left;
+      const y2 = to.top + to.height / 2 - containerRect.top;
+
+      const dx = x2 - x1;
+      const dy = y2 - y1;
+      const dist = Math.hypot(dx, dy) || 1;
+
+      const startEdge = rectEdgePoint(from.width / 2, from.height / 2, dx, dy);
+      const endEdge = rectEdgePoint(to.width / 2, to.height / 2, -dx, -dy);
+
+      const startX = x1 + startEdge.x;
+      const startY = y1 + startEdge.y;
+      const endX = x2 + endEdge.x - (dx / dist) * ARROW_GAP;
+      const endY = y2 + endEdge.y - (dy / dist) * ARROW_GAP;
+
+      const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+      line.setAttribute('x1', `${startX}`);
+      line.setAttribute('y1', `${startY}`);
+      line.setAttribute('x2', `${endX}`);
+      line.setAttribute('y2', `${endY}`);
+      line.setAttribute('stroke', 'var(--line, #94a3b8)');
+      line.setAttribute('stroke-width', '2');
+      line.setAttribute('marker-end', 'url(#arrow)');
+      svg.appendChild(line);
+    }
+  }
+
+  const container = document.getElementById('homelab-diagram');
+  if (container) {
+    const ro = new ResizeObserver(drawConnectors);
+    ro.observe(container);
+    container.querySelectorAll('.node').forEach((el) => ro.observe(el));
+    window.addEventListener('load', drawConnectors);
+
+    // Add event listener for resize
+    window.addEventListener('resize', drawConnectors);
+  }
+</script>

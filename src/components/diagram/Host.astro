@@ -1,0 +1,76 @@
+---
+const { title } = Astro.props;
+---
+
+<div class="host-box" data-id={title}>
+  <div class="header">
+    <h2>{title}</h2>
+  </div>
+  <hr class="bar" />
+  <div class="content">
+    <slot></slot>
+  </div>
+</div>
+
+<style>
+  .host-box {
+    border: 1px solid var(--border-color);
+    padding: 20px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+    --content-text-color: var(--text-color);
+  }
+
+  .host-box:hover {
+    background-color: var(--primary-color-light);
+    --content-text-color: #fff;
+    animation: subtle-animation-in 0.2s ease-in-out forwards;
+  }
+
+  @keyframes subtle-animation-in {
+    from { transform: scale(1); }
+    to { transform: scale(1.05); }
+  }
+
+  .host-box:not(:hover) {
+    --content-text-color: var(--text-color);
+    animation: subtle-animation-out 0.2s ease-in-out forwards;
+  }
+
+  @keyframes subtle-animation-out {
+    from { transform: scale(1.05); }
+    to { transform: scale(1); }
+  }
+  .header {
+    padding-bottom: 5px;
+    transition: background-color 0.3s ease; /* Add hover effects to header */
+  }
+
+  .bar {
+    width: 100%;
+    border: none;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .content {
+    margin: 10px;
+    color: var(--alt-text-color);
+  }
+
+  /* Add hover effects to elements within the slot */
+  .clickable-item:hover {
+    cursor: pointer;
+  }
+</style>
+
+<script>
+  import { selectedNode } from '@/stores/diagram'
+
+  const node = document.querySelector<HTMLElement>('.host-box');
+
+  node?.addEventListener('click', () => {
+    const id = node.dataset.id ?? null;
+    selectedNode.set(id);
+  });
+</script>
