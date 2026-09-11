@@ -2,43 +2,33 @@
 ---
 <nav class="navbar">
   <div class="title">Abdaty Kounta</div>
+
   <ul class="categories">
     <li><a href="/">Homelab</a></li>
-    <!-- <li><a href="/projects/">Projects</a></li> -->
+    <!-- <li><a href="/projects">Projects</a></li> -->
     <li><a href="/about/">About</a></li>
     <li><a href="/resume/">Resume</a></li>
   </ul>
+
+  <input type="checkbox" id="menu-toggle" class="menu-toggle" />
+  <label for="menu-toggle" class="hamburger">☰</label>
+
+  <div class="dropdown-menu">
+    <a href="/">Homelab</a>
+    <!-- <a href="/projectss">Projects</a> -->
+    <a href="/about/">About</a>
+    <a href="/resume/">Resume</a>
+  </div>
 </nav>
 
 <style>
 .navbar {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 1rem;
   background-color: #333;
-}
-
-.navbar a {
-  color: #333;
-  text-decoration: none;
-  padding: 10px 20px;
-  transition: background-color 0.3s ease, color 0.3s ease, border-radius 0.3s ease; /* Add transition for border-radius */
-  border-radius: 5px; /* Add rounded corners */
-}
-
-.navbar a:hover {
-  background-color: #f4f4f4;
-  color: #555;
-}
-
-@media (max-width: 768px) {
-  .navbar a {
-    display: none;
-  }
-  .navbar a.active {
-    display: block;
-  }
 }
 
 .title {
@@ -58,10 +48,48 @@
 .categories a {
   color: white;
   text-decoration: none;
-  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 5px;
 }
 
 .categories a:hover {
-  text-decoration: underline;
+  background-color: #f4f4f4;
+  color: #555;
+}
+
+.menu-toggle,
+.hamburger,
+.dropdown-menu {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .categories {
+    display: none;
+  }
+
+  .hamburger {
+    display: block;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .menu-toggle:checked ~ .dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background-color: #333;
+    padding: 1rem;
+  }
+
+  .dropdown-menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 0;
+  }
 }
 </style>
