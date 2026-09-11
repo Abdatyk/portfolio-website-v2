@@ -2,19 +2,40 @@
 import '@/styles/global.css';
 ---
 
-<div class="summary-header">
-  <h1 id="header">Summary Header</h1>
-  <p id="summary">Placeholder information text goes here.</p>
+<div>
+  <div class="summary-header">
+    <button id="back-button" style="display: none; margin-right: 10px;"><i class="fas fa-arrow-left"></i></button>
+    <h1 id="header">Summary Header</h1>
+  </div>
+  <div class="summary-text">
+    <p id="summary">Placeholder information text goes here.</p>
+  </div>
 </div>
 
 <style>
   .summary-header {
-    /* background-color: var(--primary-color); */
-    padding: 20px;
+    padding-left: 15%;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    /* color: var(--text-color); */
+    display: flex;
+    align-items: center;
+  }
+
+  .summary-text {
+    padding-right: 15%;
+    padding-left: 15%;
+    font-size: larger;
+  }
+
+  #back-button {
+    background-color: transparent;
+    border: none;
+    color: var(--alt-text-color);
+    cursor: pointer;
+  }
+  
+  #back-button:hover {
+    text-decoration: underline;
   }
 </style>
 
@@ -24,37 +45,77 @@ import '@/styles/global.css';
   const headers: Record<string, string> = {
     default: 'Overview',
     router: 'The Router',
-    dns: 'PiHole DNS Server',
+    dns: 'Pi-Hole DNS Server',
     lenovo: 'Lenovo Laptop - Proxy',
     rpi: 'Raspberry Pi 5',
     dell: 'Dell Optiplex - Proxmox',
   }
   const summaries: Record<string, string> = {
-    default: 'Overview details',
+    default: `The following is a network diagram of the homelab. Within the home network, proxying
+        is handled by a self-hosted NetBird instance. This provides a secure tunnel to other clients
+        and facilitates https connections through them. Ideally, physical servers would be separated
+        by VLANs, but the current router does not support this.`,
 
-    router: 'Details about the router',
+    router: `The router connects services to the wider web by port forwarding https to the Lenovo Server.
+        DHCP and DNS is handled by Pi-Hole, the router points connected devices to its corresponding
+        IP address.`,
 
-    dns: 'Details about dns',
+    dns: `The DNS server runs adjacent to the router, on a Raspberry Pi. This Pi handles network
+        traffic. It not only filters malicious and intrusive domains, but also reroutes calls
+        to the service domains from the public IP address to the LAN (local area network) address.
+        This makes the calls faster and prevents having to troubleshoot hairpin NAT.`,
 
-    lenovo: 'Details about netbird',
+    lenovo: `The biggest security chokepoint. The https port is forwarded through the router
+        to the broader internet. This server runs NetBird as a VPN service, and through those
+        wireguard tunnels it proxies services on the other servers. It also runs CrowdSec,
+        a crowdsourced web application firewall that blocks known malicious addresses.`,
 
-    rpi: 'Details about the rpi 5',
+    rpi: `The Raspberry Pi is where it all started. This 8GB model of the Pi 5 mostly runs
+        I felt were unnecessary to move to the Dell machine. In addition to some basic home
+        networking diagnostics, it handles centralized authentication for various services,
+        simple automations, and a privacy focused search engine.`,
 
-    dell: 'Details about the proxmox server',
+    dell: `The main server. Most of the important containers with heavy resource needs
+        (Storage, RAM, Compute, etc) run here on Proxmox Virtual Environment.
+        Each service - along with any interconnected stacks or sub-services - are assigned
+        their own LXC, with their own IP and resource allocation. Within every container,
+        there is also an additional NetBird docker client to tunnel to the Lenovo Server.`,
   }
 
   const hdr = document.getElementById('header');
   const summ = document.getElementById('summary');
+  const backButton = document.getElementById('back-button');
 
   selectedNode.subscribe((id) => {
-    if (!hdr) return;
+    if (!hdr || !summ || !backButton) return;
     const key = id ?? 'default';
     hdr.textContent = headers[key] ?? headers.overview;
+    summ.textContent = summaries[key] ?? summaries.overview;
+
+    if (key !== 'default') {
+      backButton.style.display = 'block';
+    } else {
+      backButton.style.display = 'none';
+    }
   });
 
   selectedNode.subscribe((id) => {
-    if (!summ) return;
+    if (!hdr || !summ || !backButton) return;
     const key = id ?? 'default';
+    hdr.textContent = headers[key] ?? headers.overview;
     summ.textContent = summaries[key] ?? summaries.overview;
+
+    if (key !== 'default') {
+      backButton.style.display = 'block';
+    } else {
+      backButton.style.display = 'none';
+    }
   });
+
+  if (backButton) {
+    backButton.addEventListener('click', () => {
+      selectedNode.set('default');
+    });
+  }
 </script>
+
