@@ -12,13 +12,12 @@
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/node": "^11.1.5",
+    "@fortawesome/fontawesome-free": "^7.3.1",
     "astro": "^7.2.10",
     "nanostores": "^1.5.3"
   },
   "allowScripts": {
     "esbuild": true
-  },
-  "devDependencies": {
-    "@fortawesome/fontawesome-free": "^7.3.1"
   }
 }
